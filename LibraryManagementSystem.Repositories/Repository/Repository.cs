@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LibraryManagementSystem.DbContext.ApplicationDbContext;
+using LibraryManagementSystem.DbContext.AppDbContext;
 using LibraryManagementSystem.Repositories.Contract;
 using Microsoft.EntityFrameworkCore;
 

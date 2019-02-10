@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using LibraryManagementSystem.Models.EntityModels;
+﻿using LibraryManagementSystem.Models.EntityModels;
+using Microsoft.EntityFrameworkCore;
 
-namespace LibraryManagementSystem.DbContext.ApplicationDbContext
+namespace LibraryManagementSystem.DbContext.AppDbContext
 {
     public class ApplicationDbContext:Microsoft.EntityFrameworkCore.DbContext
     {

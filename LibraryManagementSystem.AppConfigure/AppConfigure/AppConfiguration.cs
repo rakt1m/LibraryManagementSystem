@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LibraryManagementSystem.BLL.Contract;
 using LibraryManagementSystem.BLL.Manager;
-using LibraryManagementSystem.DbContext.ApplicationDbContext;
+using LibraryManagementSystem.DbContext.AppDbContext;
 using LibraryManagementSystem.Models.EntityModels;
 using LibraryManagementSystem.Repositories.Contract;
 using LibraryManagementSystem.Repositories.Repository;
