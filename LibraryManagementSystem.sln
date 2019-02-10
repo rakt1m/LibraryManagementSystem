@@ -4,16 +4,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem", "LibraryManagementSystem\LibraryManagementSystem.csproj", "{693DFD4C-6778-47FE-B5EA-47B5F8F5FE48}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E55EF728-ECC9-4951-B293-F749FA30498A} = {E55EF728-ECC9-4951-B293-F749FA30498A}
+		{7A87CF67-CF04-447F-867C-8C9F4116AA51} = {7A87CF67-CF04-447F-867C-8C9F4116AA51}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem.DbContext", "LibraryManagementSystem.DbContext\LibraryManagementSystem.DbContext.csproj", "{85E87F27-B212-4EA1-A03C-04B933810839}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7A87CF67-CF04-447F-867C-8C9F4116AA51} = {7A87CF67-CF04-447F-867C-8C9F4116AA51}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem.AppConfigure", "LibraryManagementSystem.AppConfigure\LibraryManagementSystem.AppConfigure.csproj", "{589CC918-0ECE-437B-91A8-8978224DDF1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85E87F27-B212-4EA1-A03C-04B933810839} = {85E87F27-B212-4EA1-A03C-04B933810839}
+		{E55EF728-ECC9-4951-B293-F749FA30498A} = {E55EF728-ECC9-4951-B293-F749FA30498A}
+		{6F069E88-E4D3-4ED2-A499-3857D103C9F2} = {6F069E88-E4D3-4ED2-A499-3857D103C9F2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem.BLL", "LibraryManagementSystem.BLL\LibraryManagementSystem.BLL.csproj", "{6F069E88-E4D3-4ED2-A499-3857D103C9F2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E55EF728-ECC9-4951-B293-F749FA30498A} = {E55EF728-ECC9-4951-B293-F749FA30498A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem.Models", "LibraryManagementSystem.Models\LibraryManagementSystem.Models.csproj", "{7A87CF67-CF04-447F-867C-8C9F4116AA51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystem.Repositories", "LibraryManagementSystem.Repositories\LibraryManagementSystem.Repositories.csproj", "{E55EF728-ECC9-4951-B293-F749FA30498A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85E87F27-B212-4EA1-A03C-04B933810839} = {85E87F27-B212-4EA1-A03C-04B933810839}
+		{7A87CF67-CF04-447F-867C-8C9F4116AA51} = {7A87CF67-CF04-447F-867C-8C9F4116AA51}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
