@@ -49,7 +49,7 @@ namespace LibraryManagementSystem.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id");
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace LibraryManagementSystem.Controllers
                 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
             return View(book);
         }
 
@@ -83,7 +83,7 @@ namespace LibraryManagementSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
             return View(book);
         }
 
@@ -118,7 +118,7 @@ namespace LibraryManagementSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
             return View(book);
         }
 

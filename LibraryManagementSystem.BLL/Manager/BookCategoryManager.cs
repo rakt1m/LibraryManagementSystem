@@ -10,7 +10,7 @@ namespace LibraryManagementSystem.BLL.Manager
 {
    public class BookCategoryManager:Manager<BookCategory>,IBookCategoryManager
     {
-        public BookCategoryManager(BookCategoryRepository repository) : base(repository)
+        public BookCategoryManager(IBookCategoryRepository repository) : base(repository)
         {
             
         }

@@ -30,10 +30,11 @@ namespace LibraryManagementSystem.AppConfigure.AppConfigure
                 configuration.GetConnectionString("ApplicationDbContext"),
                 b => b.MigrationsAssembly("LibraryManagementSystem.DbContext")));
 
+            services.AddTransient<IBookCategoryRepository, BookCategoryRepository>();
+            services.AddTransient<IBookCategoryManager, BookCategoryManager>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookManager, BookManager>();
-            services.AddTransient<IBookCategoryManager, BookCategoryManager>();
-            services.AddTransient<IBookCategoryRepository, BookCategoryRepository>();
+         
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
