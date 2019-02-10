@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryManagementSystem.BLL.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,31 +13,31 @@ namespace LibraryManagementSystem.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IBookManager _iBookManager;
+        private readonly IBookCategoryManager _iBookCategoryManager;
 
-        public BooksController(ApplicationDbContext context)
+        public BooksController(IBookManager iBookManager,IBookCategoryManager iBookCategoryManager)
         {
-            _context = context;
+            _iBookCategoryManager = iBookCategoryManager;
+            _iBookManager = iBookManager;
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Books.Include(b => b.BookCategory);
-            return View(await applicationDbContext.ToListAsync());
+            var book = _iBookManager.GetAll().ToList();
+            return View(book);
         }
 
         // GET: Books/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .Include(b => b.BookCategory)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = _iBookManager.GetById(id);
             if (book == null)
             {
                 return NotFound();
@@ -48,7 +49,7 @@ namespace LibraryManagementSystem.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Id");
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id");
             return View();
         }
 
@@ -57,32 +58,32 @@ namespace LibraryManagementSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Publication,BookCategoryId")] Book book)
+        public IActionResult Create( Book book)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                _iBookManager.Add(book);
+                
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
             return View(book);
         }
 
         // GET: Books/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books.FindAsync(id);
+            var book = _iBookManager.GetById(id);
             if (book == null)
             {
                 return NotFound();
             }
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
             return View(book);
         }
 
@@ -91,7 +92,7 @@ namespace LibraryManagementSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publication,BookCategoryId")] Book book)
+        public IActionResult Edit(int id,  Book book)
         {
             if (id != book.Id)
             {
@@ -102,8 +103,7 @@ namespace LibraryManagementSystem.Controllers
             {
                 try
                 {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
+                    _iBookManager.Update(book);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,21 +118,19 @@ namespace LibraryManagementSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BookCategoryId"] = new SelectList(_context.BookCategories, "Id", "Id", book.BookCategoryId);
+            ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Id", book.BookCategoryId);
             return View(book);
         }
 
         // GET: Books/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .Include(b => b.BookCategory)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = _iBookManager.GetById(id);
             if (book == null)
             {
                 return NotFound();
@@ -144,17 +142,16 @@ namespace LibraryManagementSystem.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
+            var book = _iBookManager.GetById(id);
+            _iBookManager.Remove(book);
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookExists(int id)
         {
-            return _context.Books.Any(e => e.Id == id);
+            return _iBookManager.GetAll().Any(e => e.Id == id);
         }
     }
 }
