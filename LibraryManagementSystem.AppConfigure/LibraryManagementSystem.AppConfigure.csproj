@@ -10,7 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LibraryManagementSystem.BLL\LibraryManagementSystem.BLL.csproj" />
     <ProjectReference Include="..\LibraryManagementSystem.DbContext\LibraryManagementSystem.DbContext.csproj" />
+    <ProjectReference Include="..\LibraryManagementSystem.Repositories\LibraryManagementSystem.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
