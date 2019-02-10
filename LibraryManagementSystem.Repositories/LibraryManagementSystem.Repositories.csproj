@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\LibraryManagementSystem.DbContext\LibraryManagementSystem.DbContext.csproj" />
     <ProjectReference Include="..\LibraryManagementSystem.Models\LibraryManagementSystem.Models.csproj" />
   </ItemGroup>
 

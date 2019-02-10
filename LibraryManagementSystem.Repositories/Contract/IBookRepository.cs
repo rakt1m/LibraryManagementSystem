@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LibraryManagementSystem.Repositories.Contract
 {
-    public interface IBookRepository :IRepository<BookCategory>
+    public interface IBookRepository :IRepository<Book>
     {
     }
 }

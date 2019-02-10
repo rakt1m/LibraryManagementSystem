@@ -5,7 +5,7 @@ using LibraryManagementSystem.Models.EntityModels;
 
 namespace LibraryManagementSystem.Repositories.Contract
 {
-    interface IBookCategoryRepository:IRepository<Book>
+    interface IBookCategoryRepository:IRepository<BookCategory>
     {
     }
 }
