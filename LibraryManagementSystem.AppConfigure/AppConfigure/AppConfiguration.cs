@@ -34,7 +34,18 @@ namespace LibraryManagementSystem.AppConfigure.AppConfigure
             services.AddTransient<IBookCategoryManager, BookCategoryManager>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookManager, BookManager>();
-         
+            services.AddTransient<IAuthorManager,AuthorManager>();
+            services.AddTransient<IAuthorRepository,AuthorRepository>();
+            services.AddTransient<IIssueManager,IssueManager>();
+            services.AddTransient<IIssueRepository,IssueRepository>();
+            services.AddTransient<ILanguageManager,LanguageManager>();
+            services.AddTransient<ILanguageRepository,LanguageRepository>();
+            services.AddTransient<IMemberManager,MemberManager>();
+            services.AddTransient<IMemberRepository,MemberRepository>();
+            services.AddTransient<IPublisherManager,PublisherManager>();
+            services.AddTransient<IPublisherRepository,PublisherRepository>();
+            services.AddTransient<IReturnManager,ReturnManager>();
+            services.AddTransient<IReturnRepository,ReturnRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
