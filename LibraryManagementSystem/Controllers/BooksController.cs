@@ -116,7 +116,7 @@ namespace LibraryManagementSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  Book book)
+        public IActionResult Edit(int id,  Book book)
         {
             if (id != book.Id)
             {
@@ -171,7 +171,7 @@ namespace LibraryManagementSystem.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var book = _iBookManager.GetById(id);
             _iBookManager.Remove(book);
