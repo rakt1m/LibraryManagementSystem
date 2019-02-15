@@ -7,7 +7,7 @@ namespace LibraryManagementSystem.Models.EntityModels
    public class Issue
     {
         public int Id { get; set; }
-
+      
         public int? MemberId { get; set; }
         public virtual Member Member { get; set; }
 
