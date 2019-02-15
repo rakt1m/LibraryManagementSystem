@@ -11,23 +11,23 @@ using LibraryManagementSystem.Models.EntityModels;
 
 namespace LibraryManagementSystem.Controllers
 {
-    public class BookCategoriesController : Controller
+    public class AuthorsController : Controller
     {
-        private readonly IBookCategoryManager _iBookCategoryManager;
+        private readonly IAuthorManager _iAuthorManager;
 
-        public BookCategoriesController(IBookCategoryManager iBookCategoryManager)
+        public AuthorsController(IAuthorManager iAuthorManager)
         {
-            _iBookCategoryManager = iBookCategoryManager;
-
+            _iAuthorManager = iAuthorManager;
         }
 
-        // GET: BookCategories
+        // GET: Authors
         public IActionResult Index()
         {
-            return View(_iBookCategoryManager.GetAll());
+            var author = _iAuthorManager.GetAll().ToList();
+            return View(author);
         }
 
-        // GET: BookCategories/Details/5
+        // GET: Authors/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -35,37 +35,38 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var bookCategory = _iBookCategoryManager.GetById(id);
-            if (bookCategory == null)
+            var author = _iAuthorManager.GetById(id);
+            if (author == null)
             {
                 return NotFound();
             }
 
-            return View(bookCategory);
+            return View(author);
         }
 
-        // GET: BookCategories/Create
+        // GET: Authors/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: BookCategories/Create
+        // POST: Authors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create( BookCategory bookCategory)
+        public IActionResult Create( Author author)
         {
             if (ModelState.IsValid)
-            {bookCategory.CreatedAt=DateTime.Now;
-                _iBookCategoryManager.Add(bookCategory);
+            {author.CreatedAt=DateTime.Now;
+                _iAuthorManager.Add(author);
+               
                 return RedirectToAction(nameof(Index));
             }
-            return View(bookCategory);
+            return View(author);
         }
 
-        // GET: BookCategories/Edit/5
+        // GET: Authors/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,22 +74,22 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var bookCategory = _iBookCategoryManager.GetById(id);
-            if (bookCategory == null)
+            var author = _iAuthorManager.GetById(id);
+            if (author == null)
             {
                 return NotFound();
             }
-            return View(bookCategory);
+            return View(author);
         }
 
-        // POST: BookCategories/Edit/5
+        // POST: Authors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, BookCategory bookCategory)
+        public IActionResult Edit(int id, Author author)
         {
-            if (id != bookCategory.Id)
+            if (id != author.Id)
             {
                 return NotFound();
             }
@@ -96,12 +97,14 @@ namespace LibraryManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 try
-                { bookCategory.UpdatedAt=DateTime.Now;
-                    _iBookCategoryManager.Update(bookCategory);
+                {author.UpdatedAt=DateTime.Now;
+                    
+                    _iAuthorManager.Update(author);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookCategoryExists(bookCategory.Id))
+                    if (!AuthorExists(author.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +115,10 @@ namespace LibraryManagementSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(bookCategory);
+            return View(author);
         }
 
-        // GET: BookCategories/Delete/5
+        // GET: Authors/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -123,28 +126,30 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var bookCategory = _iBookCategoryManager.GetById(id);
-            if (bookCategory == null)
+            var author = _iAuthorManager.GetById(id);
+            if (author == null)
             {
                 return NotFound();
             }
 
-            return View(bookCategory);
+            return View(author);
         }
 
-        // POST: BookCategories/Delete/5
+        // POST: Authors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var bookCategory = _iBookCategoryManager.GetById(id);
-            _iBookCategoryManager.Remove(bookCategory);
+            var author = _iAuthorManager.GetById(id);
+
+            _iAuthorManager.Remove(author);
+           
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookCategoryExists(int id)
+        private bool AuthorExists(int id)
         {
-            return _iBookCategoryManager.GetAll().Any(e => e.Id == id);
+            return _iAuthorManager.GetAll().Any(e => e.Id == id);
         }
     }
 }
