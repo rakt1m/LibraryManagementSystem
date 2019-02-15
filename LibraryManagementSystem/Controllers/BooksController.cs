@@ -13,12 +13,23 @@ namespace LibraryManagementSystem.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly IBookManager _iBookManager;
         private readonly IBookCategoryManager _iBookCategoryManager;
+        private readonly IAuthorManager _iAuthorManager;
+        private readonly ILanguageManager _iLanguageManager;
+        private readonly IPublisherManager _iPublisherManager;
+        private readonly IBookManager _iBookManager;
 
-        public BooksController(IBookManager iBookManager,IBookCategoryManager iBookCategoryManager)
+
+
+        public BooksController(IBookCategoryManager iBookCategoryManager, IAuthorManager iAuthorManager,
+            ILanguageManager iLanguageManager,
+            IPublisherManager iPublisherManager, IBookManager iBookManager)
         {
+            _iLanguageManager = iLanguageManager;
+
             _iBookCategoryManager = iBookCategoryManager;
+            _iAuthorManager = iAuthorManager;
+            _iPublisherManager = iPublisherManager;
             _iBookManager = iBookManager;
         }
 
@@ -49,7 +60,10 @@ namespace LibraryManagementSystem.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
+            ViewData["AuthorId"] = new SelectList(_iAuthorManager.GetAll(), "Id", "Name");
             ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name");
+            ViewData["LanguageId"] = new SelectList(_iLanguageManager.GetAll(), "Id", "Name");
+            ViewData["PublisherId"] = new SelectList(_iPublisherManager.GetAll(), "Id", "Name");
             return View();
         }
 
@@ -62,11 +76,17 @@ namespace LibraryManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                book.CreatedAt = DateTime.Now;
                 _iBookManager.Add(book);
                 
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AuthorId"] = new SelectList(_iAuthorManager.GetAll(), "Id", "Name", book.AuthorId);
             ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
+            ViewData["LanguageId"] = new SelectList(_iLanguageManager.GetAll(), "Id", "Name", book.LanguageId);
+            ViewData["PublisherId"] = new SelectList(_iPublisherManager.GetAll(), "Id", "Name", book.PublisherId);
+
+           
             return View(book);
         }
 
@@ -83,7 +103,11 @@ namespace LibraryManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["AuthorId"] = new SelectList(_iAuthorManager.GetAll(), "Id", "Name", book.AuthorId);
             ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
+            ViewData["LanguageId"] = new SelectList(_iLanguageManager.GetAll(), "Id", "Name", book.LanguageId);
+            ViewData["PublisherId"] = new SelectList(_iPublisherManager.GetAll(), "Id", "Name", book.PublisherId);
+
             return View(book);
         }
 
@@ -92,7 +116,7 @@ namespace LibraryManagementSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id,  Book book)
+        public async Task<IActionResult> Edit(int id,  Book book)
         {
             if (id != book.Id)
             {
@@ -103,7 +127,9 @@ namespace LibraryManagementSystem.Controllers
             {
                 try
                 {
+                    book.UpdatedAt=DateTime.Now;
                     _iBookManager.Update(book);
+                  
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +144,10 @@ namespace LibraryManagementSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AuthorId"] = new SelectList(_iAuthorManager.GetAll(), "Id", "Name", book.AuthorId);
             ViewData["BookCategoryId"] = new SelectList(_iBookCategoryManager.GetAll(), "Id", "Name", book.BookCategoryId);
+            ViewData["LanguageId"] = new SelectList(_iLanguageManager.GetAll(), "Id", "Name", book.LanguageId);
+            ViewData["PublisherId"] = new SelectList(_iPublisherManager.GetAll(), "Id", "Name", book.PublisherId);
             return View(book);
         }
 
@@ -142,10 +171,11 @@ namespace LibraryManagementSystem.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = _iBookManager.GetById(id);
             _iBookManager.Remove(book);
+            
             return RedirectToAction(nameof(Index));
         }
 
