@@ -9,7 +9,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Author",
+                name: "Authors",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -27,7 +27,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Author", x => x.Id);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +46,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Language",
+                name: "Languages",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -57,11 +57,11 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Language", x => x.Id);
+                    table.PrimaryKey("PK_Languages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Member",
+                name: "Members",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -86,11 +86,11 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Member", x => x.Id);
+                    table.PrimaryKey("PK_Members", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Publisher",
+                name: "Publishers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -107,11 +107,11 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publisher", x => x.Id);
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Return",
+                name: "Returns",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -124,11 +124,11 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Return", x => x.Id);
+                    table.PrimaryKey("PK_Returns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Return_Member_MemberId",
+                        name: "FK_Returns_Members_MemberId",
                         column: x => x.MemberId,
-                        principalTable: "Member",
+                        principalTable: "Members",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -159,9 +159,9 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Books_Author_AuthorId",
+                        name: "FK_Books_Authors_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "Author",
+                        principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -171,21 +171,21 @@ namespace LibraryManagementSystem.DbContext.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Books_Language_LanguageId",
+                        name: "FK_Books_Languages_LanguageId",
                         column: x => x.LanguageId,
-                        principalTable: "Language",
+                        principalTable: "Languages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Books_Publisher_PublisherId",
+                        name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
-                        principalTable: "Publisher",
+                        principalTable: "Publishers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Issue",
+                name: "Issues",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -200,17 +200,17 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Issue", x => x.Id);
+                    table.PrimaryKey("PK_Issues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Issue_Books_BookId",
+                        name: "FK_Issues_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Issue_Member_MemberId",
+                        name: "FK_Issues_Members_MemberId",
                         column: x => x.MemberId,
-                        principalTable: "Member",
+                        principalTable: "Members",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -236,46 +236,46 @@ namespace LibraryManagementSystem.DbContext.Migrations
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Issue_BookId",
-                table: "Issue",
+                name: "IX_Issues_BookId",
+                table: "Issues",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Issue_MemberId",
-                table: "Issue",
+                name: "IX_Issues_MemberId",
+                table: "Issues",
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Return_MemberId",
-                table: "Return",
+                name: "IX_Returns_MemberId",
+                table: "Returns",
                 column: "MemberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Issue");
+                name: "Issues");
 
             migrationBuilder.DropTable(
-                name: "Return");
+                name: "Returns");
 
             migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
-                name: "Member");
+                name: "Members");
 
             migrationBuilder.DropTable(
-                name: "Author");
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "BookCategories");
 
             migrationBuilder.DropTable(
-                name: "Language");
+                name: "Languages");
 
             migrationBuilder.DropTable(
-                name: "Publisher");
+                name: "Publishers");
         }
     }
 }

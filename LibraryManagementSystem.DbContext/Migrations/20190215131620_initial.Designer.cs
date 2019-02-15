@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementSystem.DbContext.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190215105459_initial")]
+    [Migration("20190215131620_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Book", b =>
@@ -144,7 +144,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Issue");
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Language", b =>
@@ -161,7 +161,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Language");
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Member", b =>
@@ -206,7 +206,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member");
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Publisher", b =>
@@ -235,7 +235,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Return", b =>
@@ -258,7 +258,7 @@ namespace LibraryManagementSystem.DbContext.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Return");
+                    b.ToTable("Returns");
                 });
 
             modelBuilder.Entity("LibraryManagementSystem.Models.EntityModels.Book", b =>
