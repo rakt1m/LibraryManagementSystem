@@ -4,11 +4,16 @@ using System.Text;
 
 namespace LibraryManagementSystem.Models.EntityModels
 {
-    public class BookCategory
+    public class Return
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual List<Book> Books { get; set; }
+
+        public int? MemberId { get; set; }
+        public virtual Member Member { get; set; }
+
+        public string FineAmount { get; set; }
+
+        public string Remarks { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
