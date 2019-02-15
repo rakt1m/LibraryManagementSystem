@@ -11,23 +11,27 @@ using LibraryManagementSystem.Models.EntityModels;
 
 namespace LibraryManagementSystem.Controllers
 {
-    public class PublishersController : Controller
+    public class IssuesController : Controller
     {
-        private readonly IPublisherManager _iPublisherManager;
+        private readonly IMemberManager _iMemberManager;
+        private readonly IBookManager _iBookManager;
+        private readonly IIssueManager _iIssueManager;
 
-        public PublishersController(IPublisherManager iPublisherManager)
+        public IssuesController(IBookManager iBookManager, IMemberManager iMemberManager,IIssueManager iIssueManager)
         {
-            _iPublisherManager = iPublisherManager;
+            _iBookManager = iBookManager;
+            _iMemberManager = iMemberManager;
+            _iIssueManager = iIssueManager;
         }
 
-        // GET: Publishers
+        // GET: Issues
         public IActionResult Index()
         {
-            var publisher = _iPublisherManager.GetAll();
-            return View(publisher);
+            var issue = _iIssueManager.GetAll().ToList();
+            return View(issue);
         }
 
-        // GET: Publishers/Details/5
+        // GET: Issues/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -35,38 +39,44 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var publisher = _iPublisherManager.GetById(id);
-            if (publisher == null)
+            var issue = _iIssueManager.GetById(id);
+            if (issue == null)
             {
                 return NotFound();
             }
 
-            return View(publisher);
+            return View(issue);
         }
 
-        // GET: Publishers/Create
+        // GET: Issues/Create
         public IActionResult Create()
         {
+            ViewData["BookId"] = new SelectList(_iBookManager.GetAll(), "Id", "Name");
+            ViewData["MemberId"] = new SelectList(_iMemberManager.GetAll(), "Id", "Name");
             return View();
         }
 
-        // POST: Publishers/Create
+        // POST: Issues/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create( Publisher publisher)
+        public IActionResult Create( Issue issue)
         {
             if (ModelState.IsValid)
-            { publisher.CreatedAt=DateTime.Now;
-                _iPublisherManager.Add(publisher);
+            { issue.CreatedAt=DateTime.Now;
+                _iIssueManager.Add(issue);
                
                 return RedirectToAction(nameof(Index));
             }
-            return View(publisher);
+            ViewData["BookId"] = new SelectList(_iBookManager.GetAll(), "Id", "Name", issue.BookId);
+            ViewData["MemberId"] = new SelectList(_iMemberManager.GetAll(), "Id", "Name", issue.MemberId);
+
+           
+            return View(issue);
         }
 
-        // GET: Publishers/Edit/5
+        // GET: Issues/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,22 +84,25 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var publisher = _iPublisherManager.GetById(id);
-            if (publisher == null)
+            var issue = _iIssueManager.GetById(id);
+            if (issue == null)
             {
                 return NotFound();
             }
-            return View(publisher);
+            ViewData["BookId"] = new SelectList(_iBookManager.GetAll(), "Id", "Name", issue.BookId);
+            ViewData["MemberId"] = new SelectList(_iMemberManager.GetAll(), "Id", "Name", issue.MemberId);
+
+            return View(issue);
         }
 
-        // POST: Publishers/Edit/5
+        // POST: Issues/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id,  Publisher publisher)
+        public IActionResult Edit(int id,  Issue issue)
         {
-            if (id != publisher.Id)
+            if (id != issue.Id)
             {
                 return NotFound();
             }
@@ -97,13 +110,13 @@ namespace LibraryManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {publisher.UpdatedAt=DateTime.Now;
-                    _iPublisherManager.Update(publisher);
+                { issue.UpdatedAt=DateTime.Now;
+                    _iIssueManager.Update(issue);
                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PublisherExists(publisher.Id))
+                    if (!IssueExists(issue.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +127,13 @@ namespace LibraryManagementSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(publisher);
+            ViewData["BookId"] = new SelectList(_iBookManager.GetAll(), "Id", "Name", issue.BookId);
+            ViewData["MemberId"] = new SelectList(_iMemberManager.GetAll(), "Id", "Name", issue.MemberId);
+
+            return View(issue);
         }
 
-        // GET: Publishers/Delete/5
+        // GET: Issues/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,29 +141,29 @@ namespace LibraryManagementSystem.Controllers
                 return NotFound();
             }
 
-            var publisher = _iPublisherManager.GetById(id);
-            if (publisher == null)
+            var issue = _iIssueManager.GetById(id);
+            if (issue == null)
             {
                 return NotFound();
             }
 
-            return View(publisher);
+            return View(issue);
         }
 
-        // POST: Publishers/Delete/5
+        // POST: Issues/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var publisher = _iPublisherManager.GetById(id);
-            _iPublisherManager.Remove(publisher);
-         
+            var issue = _iIssueManager.GetById(id);
+            _iIssueManager.Remove(issue);
+          
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PublisherExists(int id)
+        private bool IssueExists(int id)
         {
-            return _iPublisherManager.GetAll().Any(e => e.Id == id);
+            return _iIssueManager.GetAll().Any(e => e.Id == id);
         }
     }
 }
